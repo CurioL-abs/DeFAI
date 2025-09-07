@@ -72,12 +72,12 @@ graph TB
 
 | Repository                                                                     | Description                       | Tech Stack                    | Status     |
 | ------------------------------------------------------------------------------ | --------------------------------- | ----------------------------- | ---------- |
-| **[defai-core](https://github.com/CurioL-abs/defai-core)**                     | Main orchestration & Docker setup | Docker, Docs                  | ✅ Active  |
-| **[defai-frontend](https://github.com/CurioL-abs/defai-frontend)**             | React dashboard interface         | Next.js, TypeScript, Tailwind | ✅ Active  |
-| **[defai-agent-engine](https://github.com/CurioL-abs/defai-agent-engine)**     | AI agent management service       | FastAPI, SQLModel, AsyncIO    | ✅ Active  |
-| **[defai-ai-service](https://github.com/CurioL-abs/defai-ai-service)**         | Machine learning inference        | Python, Scikit-learn, FastAPI | ✅ Active  |
-| **[defai-backend](https://github.com/CurioL-abs/defai-backend)**               | API gateway service               | FastAPI, PostgreSQL           | ✅ Active  |
-| **[defai-contracts](https://github.com/CurioL-abs/defai-contracts)**           | Smart contracts                   | Solidity, Anchor, Rust        | ✅ Active  |
+| **[DeFAI](https://github.com/CurioL-abs/DeFAI)**                              | Main orchestration & Docker setup | Docker, Docs                  | ✅ Active  |
+| **[DeFAI-Frontend](https://github.com/CurioL-abs/DeFAI-Frontend)**             | React dashboard interface         | Next.js, TypeScript, Tailwind | ✅ Active  |
+| **[DeFAI-Agent-Engine](https://github.com/CurioL-abs/DeFAI-Agent-Engine)**     | AI agent management service       | FastAPI, SQLModel, AsyncIO    | ✅ Active  |
+| **[DeFAI-AI](https://github.com/CurioL-abs/DeFAI-AI)**                        | Machine learning inference        | Python, Scikit-learn, FastAPI | ✅ Active  |
+| **[DeFAI-Backend](https://github.com/CurioL-abs/DeFAI-Backend)**               | API gateway service               | FastAPI, PostgreSQL           | ✅ Active  |
+| **[DeFAI-Contracts](https://github.com/CurioL-abs/DeFAI-Contracts)**           | Smart contracts                   | Solidity, Anchor, Rust        | ✅ Active  |
 | **[defai-shared](https://github.com/CurioL-abs/defai-shared)**                 | Shared libraries & types          | TypeScript, Python            | 🔄 Planned |
 | **[defai-infrastructure](https://github.com/CurioL-abs/defai-infrastructure)** | Infrastructure as Code            | Terraform, K8s                | 🔄 Planned |
 
@@ -159,11 +159,11 @@ Experience DeFAI with testnet tokens and see how autonomous agents can optimize 
 
 Each service has its own repository with specific contribution guidelines:
 
-- **Frontend**: UI/UX improvements, React components → [defai-frontend](https://github.com/CurioL-abs/defai-frontend)
-- **Backend**: API endpoints, authentication → [defai-backend](https://github.com/CurioL-abs/defai-backend)
-- **Agent Engine**: AI strategies, blockchain integration → [defai-agent-engine](https://github.com/CurioL-abs/defai-agent-engine)
-- **AI Service**: ML models, prediction algorithms → [defai-ai-service](https://github.com/CurioL-abs/defai-ai-service)
-- **Smart Contracts**: Solana programs, DeFi integrations → [defai-contracts](https://github.com/CurioL-abs/defai-contracts)
+- **Frontend**: UI/UX improvements, React components → [DeFAI-Frontend](https://github.com/CurioL-abs/DeFAI-Frontend)
+- **Backend**: API endpoints, authentication → [DeFAI-Backend](https://github.com/CurioL-abs/DeFAI-Backend)
+- **Agent Engine**: AI strategies, blockchain integration → [DeFAI-Agent-Engine](https://github.com/CurioL-abs/DeFAI-Agent-Engine)
+- **AI Service**: ML models, prediction algorithms → [DeFAI-AI](https://github.com/CurioL-abs/DeFAI-AI)
+- **Smart Contracts**: Solana programs, DeFi integrations → [DeFAI-Contracts](https://github.com/CurioL-abs/DeFAI-Contracts)
 
 ### **Development Workflow**
 
