@@ -1,0 +1,77 @@
+version: "3.8"
+services:
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: defai_agents
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Existing services
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    depends_on:
+      - ai
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/defai_agents
+
+  ai:
+    build: ./ai
+    ports: ["8001:8001"]
+
+  # New Agent Engine service
+  agent-engine:
+    build: ./agent-engine
+    ports: ["8002:8002"]
+    depends_on:
+      - postgres
+      - redis
+      - ai
+      - backend
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/defai_agents
+      - REDIS_URL=redis://redis:6379
+      - AI_SERVICE_URL=http://ai:8001
+      - BACKEND_SERVICE_URL=http://backend:8000
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+    volumes:
+      - agent_data:/usr/src/agent-engine/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+      - agent-engine
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8002
+      - NODE_ENV=development
+
+volumes:
+  postgres_data:
+  agent_data:

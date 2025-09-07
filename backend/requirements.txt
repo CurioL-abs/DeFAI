@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+sqlmodel
+httpx
+scikit-learn
+lightgbm
+pandas
+python-dotenv

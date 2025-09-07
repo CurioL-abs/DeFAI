@@ -1,0 +1,19 @@
+fastapi
+uvicorn[standard]
+pydantic
+sqlmodel
+httpx
+asyncpg
+redis
+python-dotenv
+numpy
+pandas
+scikit-learn
+joblib
+websockets
+schedule
+
+# Note: Removed complex packages that require compilation
+# solana, solders, anchorpy - will implement mock versions
+# ta-lib - requires C compilation
+# celery - not needed for MVP
