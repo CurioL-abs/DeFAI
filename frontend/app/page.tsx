@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navbar'
 import { DashboardStats } from '@/components/dashboard-stats'
 import { AgentCard } from '@/components/agent-card'
 import { CreateAgentModal } from '@/components/create-agent-modal'
+import { FloatingActionButton } from '@/components/floating-action-button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -221,22 +222,44 @@ export default function DashboardPage() {
 
         {/* Agents section */}
         <div className="animate-slide-in" style={{ animationDelay: '0.2s' }}>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Your AI Agents</h2>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
-              <Button variant="outline" size="sm">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
-              <Button variant="defi" onClick={handleCreateAgent}>
-                <Plus className="h-4 w-4 mr-2" />
-                New Agent
-              </Button>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+            <div>
+              <h2 className="text-2xl font-bold mb-1">Your AI Agents</h2>
+              <p className="text-sm text-muted-foreground">
+                {agents.length > 0 
+                  ? `${agents.length} active agent${agents.length > 1 ? 's' : ''} managing your portfolio`
+                  : 'Deploy your first AI agent to start automated trading'
+                }
+              </p>
             </div>
+            {agents.length > 0 && (
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Filter className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Search className="h-4 w-4" />
+                </Button>
+                <div className="h-4 w-px bg-border mx-2" />
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  onClick={handleCreateAgent}
+                  className="bg-defi-primary hover:bg-defi-primary/90 text-white shadow-lg shadow-defi-primary/25"
+                >
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  Create Agent
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Agents grid */}
@@ -266,20 +289,51 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           ) : agents.length === 0 ? (
-            <Card className="text-center py-12">
-              <CardContent>
-                <div className="flex flex-col items-center">
-                  <div className="p-4 rounded-full bg-muted mb-4">
-                    <Plus className="h-8 w-8 text-muted-foreground" />
+            <Card className="relative overflow-hidden border-dashed border-2 border-defi-primary/30 bg-gradient-to-br from-defi-primary/5 via-transparent to-defi-secondary/5">
+              <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none" />
+              <CardContent className="py-16">
+                <div className="flex flex-col items-center text-center max-w-md mx-auto">
+                  {/* Animated icon */}
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 bg-defi-primary/20 rounded-full blur-2xl animate-pulse" />
+                    <div className="relative p-5 rounded-full bg-gradient-to-br from-defi-primary/10 to-defi-secondary/10 border border-defi-primary/20">
+                      <Plus className="h-10 w-10 text-defi-primary" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">No agents yet</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Create your first AI agent to start autonomous trading
+                  
+                  <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-defi-primary to-defi-secondary bg-clip-text text-transparent">
+                    Deploy Your First AI Agent
+                  </h3>
+                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                    Start your DeFi journey with an autonomous AI agent that works 24/7 to optimize your yields across multiple protocols.
                   </p>
-                  <Button variant="defi" onClick={handleCreateAgent}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Your First Agent
+                  
+                  {/* Primary CTA with animation */}
+                  <Button 
+                    variant="default" 
+                    size="lg"
+                    onClick={handleCreateAgent}
+                    className="bg-gradient-to-r from-defi-primary to-defi-secondary hover:opacity-90 text-white shadow-xl shadow-defi-primary/25 transform hover:scale-105 transition-all duration-200"
+                  >
+                    <Plus className="h-5 w-5 mr-2" />
+                    Create AI Agent
                   </Button>
+                  
+                  {/* Additional info */}
+                  <div className="flex items-center gap-6 mt-8 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                      <span>No coding required</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                      <span>Start with $100</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                      <span>Cancel anytime</span>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -318,6 +372,14 @@ export default function DashboardPage() {
         onClose={() => setShowCreateModal(false)}
         onSubmit={handleCreateAgentSubmit}
       />
+      
+      {/* Floating Action Button - Shows when user has agents */}
+      {agents.length > 0 && (
+        <FloatingActionButton 
+          onClick={handleCreateAgent}
+          showAfterScroll={100}
+        />
+      )}
     </div>
   )
 }

@@ -139,30 +139,30 @@ export function CreateAgentModal({ open, onClose, onSubmit }: CreateAgentModalPr
           {step === 1 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <label className="text-sm font-medium mb-2 block">Agent Name</label>
+                <label className="text-sm font-medium mb-2 block text-gray-200">Agent Name</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-defi-primary focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-defi-primary/30 bg-gray-800/50 text-white rounded-lg focus:ring-2 focus:ring-defi-primary focus:border-defi-primary focus:bg-gray-800/70 transition-all placeholder:text-gray-500"
                   placeholder="My DeFi Agent"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Description (Optional)</label>
+                <label className="text-sm font-medium mb-2 block text-gray-200">Description (Optional)</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-defi-primary focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-defi-primary/30 bg-gray-800/50 text-white rounded-lg focus:ring-2 focus:ring-defi-primary focus:border-defi-primary focus:bg-gray-800/70 transition-all placeholder:text-gray-500 resize-none"
                   placeholder="Describe your agent's purpose..."
                   rows={3}
                 />
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-3 block">Strategy Type</label>
+                <label className="text-sm font-medium mb-3 block text-gray-200">Strategy Type</label>
                 <div className="grid md:grid-cols-3 gap-3">
                   {strategyTypes.map((strategy) => {
                     const Icon = strategy.icon

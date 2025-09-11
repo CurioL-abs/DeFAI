@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./dev-override.css";
+import { DevOverlayRemover } from "@/components/dev-overlay-remover";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +22,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen bg-gradient-dark antialiased`}
       >
+        <DevOverlayRemover />
         <div className="relative flex min-h-screen">
           {/* Background effects */}
           <div className="fixed inset-0 bg-gradient-to-br from-defi-primary/5 via-background to-defi-secondary/5" />

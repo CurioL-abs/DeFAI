@@ -7,3 +7,10 @@ scikit-learn
 lightgbm
 pandas
 python-dotenv
+PyJWT
+PyNaCl
+eth-account
+base58
+web3
+python-jose[cryptography]
+cryptography

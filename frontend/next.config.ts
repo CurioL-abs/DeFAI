@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Disable Next.js dev indicator and overlay
+  devIndicators: {
+    appIsrStatus: false,
+    buildActivity: false,
+    buildActivityPosition: 'bottom-right',
+  },
+  // Suppress hydration warnings in development
+  reactStrictMode: false,
 };
 
 export default nextConfig;

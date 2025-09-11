@@ -1,0 +1,85 @@
+/* Hide ALL Next.js development mode overlays and indicators */
+
+/* Hide Next.js error overlays */
+[data-nextjs-dialog-overlay],
+[data-nextjs-dialog],
+[data-nextjs-scroll-focus-boundary],
+[data-nextjs-toast],
+[data-nextjs-react-refresh-log-box],
+nextjs-portal {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide React DevTools indicator - the floating button */
+[data-react-dev-tools],
+[data-react-devtools],
+.__react-devtools-overlay__,
+.__react-devtools-overlay,
+#react-devtools-overlay,
+.react-devtools-overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide the specific Next.js 15 dev indicator */
+div[style*="position:fixed"][style*="bottom:1rem"],
+div[style*="position: fixed"][style*="bottom: 1rem"],
+div[style*="position:fixed"][style*="bottom:16px"],
+div[style*="position: fixed"][style*="bottom: 16px"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide any element with these specific styles (Next.js floating panels) */
+div[style*="z-index:9999"],
+div[style*="z-index: 9999"],
+div[style*="z-index:10000"],
+div[style*="z-index: 10000"],
+div[style*="z-index:99999"],
+div[style*="z-index: 99999"],
+div[style*="z-index:2147483647"] {
+  display: none !important;
+}
+
+/* Target the specific Next.js floating button by its content structure */
+body > div > div[style*="border-radius"],
+body > div > button[style*="border-radius"],
+body > div[style*="display:flex"][style*="position:fixed"],
+body > div[style*="display: flex"][style*="position: fixed"] {
+  display: none !important;
+}
+
+/* Hide anything with nextjs or react-refresh in class or id */
+[class*="nextjs"],
+[id*="nextjs"],
+[class*="react-refresh"],
+[id*="react-refresh"],
+[class*="__next"],
+[id*="__next"] {
+  display: none !important;
+}
+
+/* Force hide any fixed positioned element in corners */
+*[style*="position: fixed"][style*="right: 1"],
+*[style*="position: fixed"][style*="left: 1"],
+*[style*="position: fixed"][style*="right:1"],
+*[style*="position: fixed"][style*="left:1"],
+*[style*="position:fixed"][style*="right:1"],
+*[style*="position:fixed"][style*="left:1"] {
+  display: none !important;
+}
+
+/* Global override for any high z-index fixed elements */
+body > *[style*="position: fixed"] {
+  display: none !important;
+}
+
+/* Except our own modals and components */
+body [role="dialog"],
+body [data-radix-portal],
+body .fixed:not([style*="z-index: 9"]):not([style*="z-index:9"]) {
+  display: block !important;
+}

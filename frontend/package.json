@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "NODE_ENV=production next dev --turbopack",
+    "dev:debug": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
@@ -21,6 +22,15 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.91.0",
+    "@rainbow-me/rainbowkit": "^2.0.0",
+    "wagmi": "^2.5.0",
+    "viem": "^2.7.0",
+    "ethers": "^6.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.400.0",
@@ -29,7 +39,10 @@
     "tailwindcss-animate": "^1.0.7",
     "framer-motion": "^11.0.0",
     "axios": "^1.6.0",
-    "swr": "^2.2.0"
+    "swr": "^2.2.0",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "bs58": "^5.0.0"
   },
   "devDependencies": {
     "typescript": "^5",
