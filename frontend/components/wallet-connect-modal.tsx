@@ -290,7 +290,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <DialogContent className="max-w-lg bg-gray-950 border-gray-800">
         <DialogHeader>
-          <DialogTitle className="flex items-center text-xl">
+          <DialogTitle className="flex items-center text-xl text-white">
             <div className="relative mr-3">
               <div className="absolute inset-0 bg-gradient-to-r from-defi-primary to-defi-secondary rounded-full blur-lg opacity-50" />
               <div className="relative p-2 rounded-full bg-gradient-to-r from-defi-primary to-defi-secondary">
@@ -299,7 +299,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
             </div>
             Connect Wallet
           </DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogDescription className="text-gray-300">
             {step === 'select' && 'Choose your wallet to connect and authenticate'}
             {step === 'connecting' && 'Connecting to your wallet...'}
             {step === 'signing' && 'Please sign the message in your wallet'}
@@ -322,7 +322,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                   className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     selectedChain === 'solana'
                       ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/20'
-                      : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
                   }`}
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -335,7 +335,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                   className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     selectedChain === 'ethereum'
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20'
-                      : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
                   }`}
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -386,11 +386,11 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                           </div>
                           <div className="text-left">
                             <div className="font-semibold text-white">{wallet.name}</div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-300">
                               {isInstalled ? (
                                 'Ready to connect'
                               ) : (
-                                <span className="text-yellow-500">Click to install</span>
+                                <span className="text-yellow-400 font-medium">Click to install</span>
                               )}
                             </div>
                           </div>
@@ -398,9 +398,9 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                         {isConnecting ? (
                           <Loader2 className="h-5 w-5 animate-spin text-defi-primary" />
                         ) : isInstalled ? (
-                          <ChevronRight className="h-5 w-5 text-gray-400" />
+                          <ChevronRight className="h-5 w-5 text-gray-300" />
                         ) : (
-                          <ExternalLink className="h-5 w-5 text-gray-400" />
+                          <ExternalLink className="h-5 w-5 text-gray-300" />
                         )}
                       </div>
                     </motion.button>
@@ -423,10 +423,10 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
               )}
 
               {/* Security note */}
-              <div className="p-3 rounded-lg bg-defi-primary/5 border border-defi-primary/20">
+              <div className="p-3 rounded-lg bg-defi-primary/10 border border-defi-primary/30">
                 <div className="flex items-start gap-2">
                   <Shield className="h-4 w-4 text-defi-primary mt-0.5" />
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-gray-300">
                     We'll ask you to sign a message to verify ownership. This is free and doesn't involve any transaction.
                   </div>
                 </div>
@@ -451,7 +451,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-white">Connecting...</h3>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-200">
                 Please approve the connection in your wallet
               </p>
             </motion.div>
@@ -475,7 +475,7 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                 </motion.div>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-white">Sign Message</h3>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-200">
                 Please sign the authentication message in your wallet
               </p>
               <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-defi-secondary/10 border border-defi-secondary/20">
@@ -512,15 +512,15 @@ export function WalletConnectModal({ open, onClose, onConnect }: WalletConnectMo
                   className="space-y-3"
                 >
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-800 border border-gray-700">
-                    <span className="text-sm font-mono text-gray-300">{formatAddress(connectedAddress)}</span>
+                    <span className="text-sm font-mono text-white">{formatAddress(connectedAddress)}</span>
                     <button
                       onClick={copyAddress}
                       className="p-1.5 hover:bg-gray-700 rounded-md transition-colors"
                     >
-                      <Copy className="h-3 w-3 text-gray-400" />
+                      <Copy className="h-3 w-3 text-gray-300" />
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500">Redirecting to dashboard...</p>
+                  <p className="text-xs text-gray-300">Redirecting to dashboard...</p>
                 </motion.div>
               )}
             </motion.div>
