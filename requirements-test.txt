@@ -1,0 +1,5 @@
+asyncpg==0.29.0
+sqlalchemy[asyncio]==2.0.23
+sqlmodel==0.0.14
+psycopg2-binary==2.9.9
+
