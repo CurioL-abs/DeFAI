@@ -9,6 +9,8 @@ from core.strategy_engine import StrategyEngine
 from core.solana_client import SolanaClientManager
 from api import agents, strategies, monitoring
 from models import database
+from middleware.tracing import RequestTracingMiddleware
+from events.subscriber import run_subscriber
 
 load_dotenv()
 
@@ -28,6 +30,7 @@ async def lifespan(app: FastAPI):
     
     # Start background tasks
     asyncio.create_task(app.state.agent_manager.run_agent_loop())
+    asyncio.create_task(run_subscriber())
     
     yield
     
@@ -41,6 +44,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+app.add_middleware(RequestTracingMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

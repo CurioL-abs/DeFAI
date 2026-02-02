@@ -6,6 +6,7 @@ httpx
 asyncpg
 redis
 python-dotenv
+PyJWT
 numpy
 pandas
 scikit-learn

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
 import httpx
+import os
 
 from .schemas import (
     StrategyCreate,
@@ -22,6 +23,7 @@ from .repositories import (
     TransactionRepository,
     PerformanceRepository,
 )
+from .events import publish_event
 
 router = APIRouter()
 
@@ -43,6 +45,7 @@ async def create_agent(
         risk_tolerance=data.risk_tolerance,
         max_position_size=data.max_position_size,
     )
+    await publish_event("agent.created", {"agent_id": agent.id, "user_id": current_user.id})
     return agent
 
 
@@ -115,6 +118,7 @@ async def start_agent(
         raise HTTPException(status_code=404, detail="Agent not found")
 
     await repo.update_status(agent_id, AgentStatus.ACTIVE)
+    await publish_event("agent.started", {"agent_id": agent_id, "user_id": current_user.id})
     return {"message": "Agent started", "status": "active"}
 
 
@@ -130,6 +134,7 @@ async def stop_agent(
         raise HTTPException(status_code=404, detail="Agent not found")
 
     await repo.update_status(agent_id, AgentStatus.STOPPED)
+    await publish_event("agent.stopped", {"agent_id": agent_id, "user_id": current_user.id})
     return {"message": "Agent stopped", "status": "stopped"}
 
 
@@ -145,6 +150,7 @@ async def pause_agent(
         raise HTTPException(status_code=404, detail="Agent not found")
 
     await repo.update_status(agent_id, AgentStatus.PAUSED)
+    await publish_event("agent.paused", {"agent_id": agent_id, "user_id": current_user.id})
     return {"message": "Agent paused", "status": "paused"}
 
 
@@ -210,9 +216,12 @@ async def create_strategy(
     strategy: StrategyCreate,
     current_user: User = Depends(get_current_user),
 ):
+    internal_key = os.getenv("INTERNAL_SERVICE_KEY", "internal-key-change-in-production")
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "http://ai:8001/predict", json={"strategy_id": strategy.name}
+            "http://ai:8001/predict",
+            json={"strategy_id": strategy.name},
+            headers={"X-Internal-Key": internal_key},
         )
         if response.status_code != 200:
             raise HTTPException(status_code=500, detail="AI service error")

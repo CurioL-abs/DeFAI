@@ -6,13 +6,14 @@ from models import (
     Agent, AgentStatus, AgentPerformance, PortfolioSnapshot, StrategyExecution,
     LeaderboardEntry, get_db_session
 )
+from middleware.auth import get_current_user
 
 router = APIRouter()
 
 @router.get("/dashboard")
 async def get_dashboard_stats(
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Get dashboard statistics for user's agents"""
     try:
@@ -314,7 +315,7 @@ async def get_system_alerts(
 @router.get("/portfolio-overview")
 async def get_portfolio_overview(
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Get portfolio overview across all user's agents"""
     try:
@@ -375,7 +376,7 @@ async def get_portfolio_overview(
 @router.get("/performance-metrics")
 async def get_performance_metrics(
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin",
+    current_user: str = Depends(get_current_user),
     days: int = Query(30, le=365, description="Number of days for performance calculation")
 ):
     """Get detailed performance metrics for user's agents"""

@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routes import router
 from .wallet_auth import router as auth_router
 from .db import init_db, test_db_connection
+from .middleware import RequestTracingMiddleware
 from dotenv import load_dotenv
 import logging
 
@@ -12,6 +13,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 app = FastAPI(title="DeFAI Forecast Optimizer - Backend")
 
+app.add_middleware(RequestTracingMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://localhost:3001"],

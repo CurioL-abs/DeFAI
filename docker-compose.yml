@@ -19,7 +19,7 @@ services:
       retries: 10
       start_period: 10s
 
-  # Redis for caching
+  # Redis for caching and pub/sub
   redis:
     image: redis:7-alpine
     ports:
@@ -30,7 +30,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Existing services
+  # Backend API
   backend:
     build: ./backend
     ports: ["8000:8000"]
@@ -39,24 +39,38 @@ services:
         condition: service_started
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/defai_agents
+      - JWT_SECRET=your-secret-key-change-in-production
+      - INTERNAL_SERVICE_KEY=internal-key-change-in-production
+      - REDIS_URL=redis://redis:6379
 
+  # AI inference service
   ai:
     build: ./ai
     ports: ["8001:8001"]
+    environment:
+      - INTERNAL_SERVICE_KEY=internal-key-change-in-production
 
-  # New Agent Engine service
+  # Agent Engine service
   agent-engine:
     build: ./agent-engine
     ports: ["8002:8002"]
     depends_on:
-      - postgres
-      - redis
-      - ai
-      - backend
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ai:
+        condition: service_started
+      backend:
+        condition: service_started
     environment:
       - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/defai_agents
+      - JWT_SECRET=your-secret-key-change-in-production
+      - INTERNAL_SERVICE_KEY=internal-key-change-in-production
       - REDIS_URL=redis://redis:6379
       - AI_SERVICE_URL=http://ai:8001
       - BACKEND_SERVICE_URL=http://backend:8000
@@ -64,6 +78,16 @@ services:
     volumes:
       - agent_data:/usr/src/agent-engine/data
     restart: unless-stopped
+
+  # Nginx API Gateway
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+      - ai
+      - agent-engine
 
   frontend:
     build: ./frontend
@@ -73,7 +97,7 @@ services:
       - backend
       - agent-engine
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8002
+      - NEXT_PUBLIC_API_URL=http://localhost:80
       - NODE_ENV=development
 
 volumes:

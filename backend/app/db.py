@@ -50,17 +50,37 @@ async def get_db_session() -> AsyncSession:
             raise
 
 async def init_db():
+    """Create tables and stamp Alembic version for future migrations."""
     try:
-        from .models import User, Agent, Strategy, Transaction, Performance
-        
+        from .models import User, Agent, Strategy, Transaction, Performance  # noqa: F401
+        from alembic.config import Config
+        from alembic import command
+        import os
+
+        # Create all tables using SQLModel metadata (handles enums correctly)
         async with engine.begin() as conn:
             await conn.run_sync(SQLModel.metadata.create_all)
-        logger.info("✅ Database initialized successfully")
-        logger.info("📊 Tables created: users, agents, strategies, transactions, performance")
+
+        # Stamp with current Alembic revision so future migrations work
+        alembic_dir = os.path.join(os.path.dirname(__file__), "..", "alembic")
+        alembic_cfg = Config(os.path.join(os.path.dirname(__file__), "..", "alembic.ini"))
+        alembic_cfg.set_main_option("script_location", alembic_dir)
+
+        async with engine.connect() as conn:
+            await conn.run_sync(_stamp_alembic, alembic_cfg)
+            await conn.commit()
+
+        logger.info("Database initialized and Alembic version stamped")
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to initialize database: {e}")
+        logger.error(f"Failed to initialize database: {e}")
         raise
+
+
+def _stamp_alembic(connection, alembic_cfg):
+    from alembic import command
+    alembic_cfg.attributes["connection"] = connection
+    command.stamp(alembic_cfg, "head")
 
 async def test_db_connection():
     try:

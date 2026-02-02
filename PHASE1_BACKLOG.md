@@ -45,7 +45,7 @@
   - Create models in agent-engine/models/
   - Ensure consistent schema
 
-- [ ] TASK-004: Add database migrations (2h)
+- [x] TASK-004: Add database migrations (2h) ✅
   - Setup Alembic for migrations
   - Create initial migration
   - Add migration scripts to Docker
@@ -72,29 +72,29 @@
 
 #### Tasks:
 ```markdown
-- [ ] TASK-006: Setup API Gateway with Nginx (3h)
+- [x] TASK-006: Setup API Gateway with Nginx (3h) ✅
   - Create nginx.conf with routing rules
   - Route /api/v1/* to backend:8000
   - Route /api/agents/* to agent-engine:8002
   - Route /api/ai/* to ai:8001
 
-- [x] TASK-007: Implement service discovery (2h) ✅ (partial: health checks + Docker networking done)
+- [x] TASK-007: Implement service discovery (2h) ✅
   - Add health check endpoints to all services
   - Configure Docker networking
   - Add retry logic for service calls
 
-- [ ] TASK-008: Add inter-service authentication (3h)
+- [x] TASK-008: Add inter-service authentication (3h) ✅
   - Generate internal API keys
   - Add authentication middleware
   - Secure service-to-service calls
 
-- [ ] TASK-009: Setup Redis pub/sub (3h)
+- [x] TASK-009: Setup Redis pub/sub (3h) ✅
   - Configure Redis for message passing
   - Implement event publishers
   - Add event subscribers
   - Test message flow
 
-- [ ] TASK-010: Add request tracing (2h)
+- [x] TASK-010: Add request tracing (2h) ✅
   - Add correlation IDs to requests
   - Implement logging with trace IDs
   - Setup log aggregation

@@ -17,3 +17,5 @@ cryptography
 asyncpg
 psycopg2-binary
 sqlalchemy[asyncio]
+alembic
+redis

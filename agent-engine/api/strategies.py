@@ -6,6 +6,7 @@ from models import (
     Strategy, StrategyCreate, StrategyType, StrategyExecution, StrategyExecutionResponse,
     get_db_session
 )
+from middleware.auth import get_current_user
 
 router = APIRouter()
 
@@ -13,7 +14,7 @@ router = APIRouter()
 async def create_strategy(
     strategy_data: StrategyCreate,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"  # TODO: Replace with actual auth
+    current_user: str = Depends(get_current_user)
 ):
     """Create a new reusable strategy template"""
     try:

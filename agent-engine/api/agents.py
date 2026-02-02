@@ -8,6 +8,7 @@ from models import (
     get_db_session, StrategyExecution, AgentPerformance
 )
 from core.agent_manager import AgentManager
+from middleware.auth import get_current_user
 
 router = APIRouter()
 
@@ -15,7 +16,7 @@ router = APIRouter()
 async def create_agent(
     agent_data: AgentCreate,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"  # TODO: Replace with actual auth
+    current_user: str = Depends(get_current_user)  # TODO: Replace with actual auth
 ):
     """Create a new AI agent"""
     try:
@@ -54,7 +55,7 @@ async def create_agent(
 @router.get("/", response_model=List[AgentResponse])
 async def list_agents(
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin",
+    current_user: str = Depends(get_current_user),
     status_filter: Optional[AgentStatus] = Query(None, description="Filter by agent status"),
     limit: int = Query(50, le=100, description="Maximum number of agents to return"),
     offset: int = Query(0, ge=0, description="Number of agents to skip")
@@ -82,7 +83,7 @@ async def list_agents(
 async def get_agent(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Get detailed information about a specific agent"""
     try:
@@ -116,7 +117,7 @@ async def update_agent(
     agent_id: str,
     agent_update: AgentUpdate,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Update an existing agent"""
     try:
@@ -157,7 +158,7 @@ async def update_agent(
 async def delete_agent(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Delete an agent (and stop it if running)"""
     try:
@@ -206,7 +207,7 @@ async def delete_agent(
 async def start_agent(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Start an agent (activate autonomous trading)"""
     try:
@@ -267,7 +268,7 @@ async def start_agent(
 async def stop_agent(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Stop an agent (pause autonomous trading)"""
     try:
@@ -314,7 +315,7 @@ async def stop_agent(
 async def pause_agent(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin"
+    current_user: str = Depends(get_current_user)
 ):
     """Pause an agent (temporarily stop autonomous trading)"""
     try:
@@ -368,7 +369,7 @@ async def pause_agent(
 async def get_agent_executions(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin",
+    current_user: str = Depends(get_current_user),
     limit: int = Query(50, le=100, description="Maximum number of executions to return"),
     offset: int = Query(0, ge=0, description="Number of executions to skip")
 ):
@@ -409,7 +410,7 @@ async def get_agent_executions(
 async def get_agent_performance(
     agent_id: str,
     session: AsyncSession = Depends(get_db_session),
-    current_user: str = "admin",
+    current_user: str = Depends(get_current_user),
     days: int = Query(30, le=365, description="Number of days of performance history")
 ):
     """Get performance metrics for an agent"""
