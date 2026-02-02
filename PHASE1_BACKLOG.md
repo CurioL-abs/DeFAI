@@ -28,19 +28,19 @@
 
 #### Tasks:
 ```markdown
-- [ ] TASK-001: Setup PostgreSQL in Docker (2h)
+- [x] TASK-001: Setup PostgreSQL in Docker (2h) ✅
   - Add postgres service to docker-compose.yml
   - Configure volumes for data persistence
   - Set environment variables
 
-- [ ] TASK-002: Create database schemas (4h)
+- [x] TASK-002: Create database schemas (4h) ✅
   - Users table (id, wallet_address, created_at)
   - Agents table (id, user_id, name, config, status)
   - Strategies table (id, agent_id, type, params)
   - Transactions table (id, agent_id, txid, status, profit)
   - Performance table (id, agent_id, date, metrics)
 
-- [ ] TASK-003: Implement SQLModel models (4h)
+- [x] TASK-003: Implement SQLModel models (4h) ✅
   - Create models in backend/app/models/
   - Create models in agent-engine/models/
   - Ensure consistent schema
@@ -50,7 +50,7 @@
   - Create initial migration
   - Add migration scripts to Docker
 
-- [ ] TASK-005: Implement repository pattern (4h)
+- [x] TASK-005: Implement repository pattern (4h) ✅
   - Create UserRepository
   - Create AgentRepository
   - Create TransactionRepository
@@ -58,10 +58,10 @@
 ```
 
 **Acceptance Criteria**:
-- [ ] Database connects successfully
-- [ ] All tables created with proper relationships
-- [ ] CRUD operations work for all entities
-- [ ] Connection pooling configured
+- [x] Database connects successfully
+- [x] All tables created with proper relationships
+- [x] CRUD operations work for all entities
+- [x] Connection pooling configured
 
 ---
 
@@ -78,7 +78,7 @@
   - Route /api/agents/* to agent-engine:8002
   - Route /api/ai/* to ai:8001
 
-- [ ] TASK-007: Implement service discovery (2h)
+- [x] TASK-007: Implement service discovery (2h) ✅ (partial: health checks + Docker networking done)
   - Add health check endpoints to all services
   - Configure Docker networking
   - Add retry logic for service calls
@@ -102,7 +102,7 @@
 
 **Acceptance Criteria**:
 - [ ] All services accessible through gateway
-- [ ] Health checks return 200 OK
+- [x] Health checks return 200 OK
 - [ ] Service calls authenticated
 - [ ] Events flow through Redis
 
@@ -170,7 +170,7 @@
   - Add wallet connection button
   - Handle connection states
 
-- [ ] TASK-017: Implement wallet authentication (4h)
+- [x] TASK-017: Implement wallet authentication (4h) ✅
   - Sign message for authentication
   - Verify signature on backend
   - Create/retrieve user account
@@ -240,7 +240,7 @@
 
 #### Tasks:
 ```markdown
-- [ ] TASK-023: Implement agent creation API (4h)
+- [x] TASK-023: Implement agent creation API (4h) ✅
   - Add POST /agents endpoint
   - Validate agent configuration
   - Store in database
@@ -258,7 +258,7 @@
   - Handle response
   - Show success/error
 
-- [ ] TASK-026: Add agent management (4h)
+- [x] TASK-026: Add agent management (4h) ✅
   - List user's agents
   - Update agent config
   - Start/stop agent
