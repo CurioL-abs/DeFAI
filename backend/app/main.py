@@ -20,27 +20,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router)
-app.include_router(auth_router)
+app.include_router(router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/api/v1")
+
 
 @app.on_event("startup")
 async def on_startup():
-    logger.info("🚀 Starting DeFAI Backend...")
+    logger.info("Starting DeFAI Backend...")
     try:
         await init_db()
-        logger.info("✅ Backend startup complete")
+        logger.info("Backend startup complete")
     except Exception as e:
-        logger.error(f"❌ Failed to start backend: {e}")
+        logger.error(f"Failed to start backend: {e}")
         raise
+
 
 @app.get("/health")
 async def health():
     return {"status": "ok", "service": "backend"}
+
 
 @app.get("/health/db")
 async def health_db():
     db_ok = await test_db_connection()
     return {
         "status": "ok" if db_ok else "error",
-        "database": "connected" if db_ok else "disconnected"
+        "database": "connected" if db_ok else "disconnected",
     }

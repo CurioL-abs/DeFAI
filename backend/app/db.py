@@ -1,6 +1,7 @@
 import os
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy import text
 from sqlmodel import SQLModel
 from contextlib import asynccontextmanager
 
@@ -38,9 +39,15 @@ async def get_session():
         finally:
             await session.close()
 
-async def get_db_session():
-    async with get_session() as session:
-        yield session
+async def get_db_session() -> AsyncSession:
+    """FastAPI dependency that yields a database session."""
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
 
 async def init_db():
     try:
@@ -58,7 +65,7 @@ async def init_db():
 async def test_db_connection():
     try:
         async with engine.connect() as conn:
-            await conn.execute("SELECT 1")
+            await conn.execute(text("SELECT 1"))
         logger.info("✅ Database connection test successful")
         return True
     except Exception as e:
